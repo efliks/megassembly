@@ -204,20 +204,6 @@ get_palette proc
     ret
 endp
 
-; in: edi = palette ptr
-flip_palette proc
-    mov     esi, edi
-    cld
-    mov     ecx, 768
-rp_do:
-    lodsb
-    neg     al
-    add     al, 63
-    stosb
-    loop    rp_do
-    ret
-endp
-
 unset_mode13h proc
     mov     edi, offset dpmi_regs
     mov     [edi._eax], 000003h
@@ -250,7 +236,6 @@ set_mode13h proc
     mov     esp, ebp
     ret
 endp
-
 
 _sx dd ?
 _sy dd ?

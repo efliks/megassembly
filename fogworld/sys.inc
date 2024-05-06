@@ -7,7 +7,6 @@ global wait_for_vsync:PROC
 
 global set_palette:PROC
 global get_palette:PROC
-global flip_palette:PROC
 
 global alloc_mem:PROC
 global free_mem:PROC

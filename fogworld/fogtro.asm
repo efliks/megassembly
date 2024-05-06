@@ -177,15 +177,23 @@ comment #
     pop     esi
     rep     movsd
 
+comment #
     mov     edi, d [PalettePtr]
-    ;call    flip_palette
+    mov     esi, edi
+    cld
+    mov     ecx, 768
+@@flip_color:
+    lodsb
+    neg     al
+    add     al, 63
+    stosb
+    loop    @@flip_color
 
     mov     edi, d [PalettePtr]
     xor     al, al
     stosb
     stosb
-    stosb
-
+    stosb  #
 
     call    set_mode13h
 

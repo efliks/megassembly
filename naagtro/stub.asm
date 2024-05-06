@@ -15,6 +15,13 @@ start16:
     mov     eax, code32
     mov     ds, ax
 
+      ; get PSP address
+    mov     ah, 62h
+    int     21h
+    movzx   ebx, bx
+    shl     ebx, 4
+    mov     dword ptr [PSP_addr], ebx
+
       ; check if DPMI host is present
     mov     ax, 1687h
     int     2fh
@@ -115,6 +122,7 @@ dpmi_err3    db 'Can not switch to protected mode.', 10, 13, '$'
 
 dpmi_switch    dd ?
 code32_base    dd ?
+PSP_addr       dd ?
 
 desc_code32    db 0ffh, 0ffh, 0h, 0h, 0h, 0fah, 0cfh, 0h
 desc_data32    db 0ffh, 0ffh, 0h, 0h, 0h, 0f2h, 0cfh, 0h
@@ -134,6 +142,10 @@ start32:
     sub     esp, large code32
     shl     esp, 4
     add     esp, STACK_SIZE-4
+    
+    mov     eax, dword ptr [PSP_addr]
+    sub     eax, dword ptr [code32_base]
+    mov     dword ptr [PSP_addr], eax
 
     call    entrypoint
 

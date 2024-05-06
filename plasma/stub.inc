@@ -23,3 +23,4 @@ ends
 global entrypoint:PROC
 
 global code32_base:DWORD
+global PSP_addr:DWORD
