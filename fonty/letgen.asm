@@ -11,30 +11,19 @@ POLYS_DIFF equ -1
 
 CSIZE equ 32.0
 
-polygon struc
-   poly_v1   dw  ?
-   poly_v2   dw  ?
-   poly_v3   dw  ?
-   poly_v4   dw  ?
-ends
-
-tiny_struct3d struc
-    ts3d_n_points dd ?  ; number of points
-    ts3d_n_faces dd ?  ; number of faces
-    ts3d_vis_faces dd ?  ; number of visible faces
-
-    ts3d_points dd ?  ; base points
-    ts3d_r_points dd ?  ; rotated points
-    ts3d_t_points dd ?  ; 2d points
-
-    ts3d_faces dd ?  ; faces
-ends
-
 .386p
 
 
 code32 segment para public use32
     assume cs:code32, ds:code32
+
+; in: eax = ASCII number
+; out: eax = number of vertices, ebx = number of faces
+GetLetterParams proc
+    mov     b [GetParamsMode], 1
+    call    MakeLetter3d
+    ret
+endp
 
 ; in: eax = ASCII number, esi = ptr to memory handle, edi = ptr to struct3d
 ; out: eax = 0 if error occured
@@ -45,6 +34,8 @@ MakeLetter3d proc
     mov     d [Buffer3d.ts3d_faces], esp
     add     d [Buffer3d.ts3d_faces], N_POINTS * (size point3d)
 
+    mov     d [_is3d], esi
+    mov     d [_size], ebx
     pushad
 
     and     eax, 255
@@ -320,7 +311,18 @@ comment #
     mov     ecx, 12 * 3
     rep     movsw
 ML3d_not_empty: #
+    
+    mov     al, b [GetParamsMode]
+    cmp     al, 1
+    jne     ML3d_normal
+    xor     al, al
+    mov     b [GetParamsMode], al
+    popad
+    mov     eax, d [Buffer3d.ts3d_n_points]
+    mov     ebx, d [Buffer3d.ts3d_n_faces]
+    jmp     ML3d_leave
 
+ML3d_normal:
     mov     edi, o Buffer3d
     call    CenterStruct3d
     mov     edi, o Buffer3d
@@ -328,7 +330,8 @@ ML3d_not_empty: #
     popad
     call    SaveLetter3d
 
-      ; free allocated memory
+ML3d_leave:
+      ; free allocated memory !
     add     esp, BUFFER3D_SIZE
     ret
 endp
@@ -582,6 +585,11 @@ CubeVertices    dd -CSIZE, -CSIZE, CSIZE,  CSIZE, -CSIZE, CSIZE,  CSIZE, CSIZE, 
 
 CubeFaces    dw 0, 1, 2,  0, 2, 3,  1, 5, 6,  1, 6, 2,  4, 0, 3,  4, 3, 7,  4, 5, 1,  4, 1, 0
         dw 3, 2, 6,  3, 6, 7,  5, 4, 7,  5, 7, 6
+
+_is3d dd 0
+_size dd 0
+
+GetParamsMode db 0
 
 Buffer3d_handle dd ?
 Buffer3d tiny_struct3d ?
