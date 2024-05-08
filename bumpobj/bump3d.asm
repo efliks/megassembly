@@ -75,20 +75,9 @@ entrypoint proc
 
       ; init normals
     mov     esi, o torus3d
+    mov     d torus3d.s3d_point_nrm, o point_normals
     ;call    init_point_normals
     
-    ;/////// REMOVE ///////
-;    mov     edi, o _regs
-;    mov     [edi._eax], 000003h
-;    mov     eax, 0300h
-;    mov     ebx, 10h
-;    int     31h
-;
-;    mov     eax, mem_handle
-;    call    free_mem
-;    
-;    ret
-    ;/////// END OF REMOVE ///////
 
     call    init_font
 
