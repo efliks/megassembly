@@ -123,6 +123,7 @@ endp
 
 mx_rotate_points proc
 
+comment #
     fld     d [esi.x3d]
     fmul    d [ebx.m_00]
     fld     d [esi.y3d]
@@ -151,10 +152,40 @@ mx_rotate_points proc
     fmul    d [ebx.m_22]
     faddp   st(1), st
     faddp   st(1), st
-    fstp    d [edi.z3d]
+    fstp    d [edi.z3d] #
 
-    add     esi, type point3d
-    add     edi, type point3d
+    fld     d [esi + 0]
+    fmul    d [ebx + 0 * 4 + 0 * 12]
+    fld     d [esi + 4]
+    fmul    d [ebx + 0 * 4 + 1 * 12]
+    fld     d [esi + 8]
+    fmul    d [ebx + 0 * 4 + 2 * 12]
+    faddp   st(1), st(0)
+    faddp   st(1), st(0)
+    fstp    d [edi + 0]
+
+    fld     d [esi + 0]
+    fmul    d [ebx + 1 * 4 + 0 * 12]
+    fld     d [esi + 4]
+    fmul    d [ebx + 1 * 4 + 1 * 12]
+    fld     d [esi + 8]
+    fmul    d [ebx + 1 * 4 + 2 * 12]
+    faddp   st(1), st(0)
+    faddp   st(1), st(0)
+    fstp    d [edi + 4]
+
+    fld     d [esi + 0]
+    fmul    d [ebx + 2 * 4 + 0 * 12]
+    fld     d [esi + 4]
+    fmul    d [ebx + 2 * 4 + 1 * 12]
+    fld     d [esi + 8]
+    fmul    d [ebx + 2 * 4 + 2 * 12]
+    faddp   st(1), st(0)
+    faddp   st(1), st(0)
+    fstp    d [edi + 8]
+
+    add     esi, size point3d
+    add     edi, size point3d
     dec     ecx
     jnz     mx_rotate_points
 
@@ -169,6 +200,7 @@ endp
 ;------------------------------------------------------------
 
 translate_points proc
+
     fld     d [esi.z3d]
     fadd    perspective
 
@@ -212,6 +244,45 @@ endp
 ;------------------------------------------------------------
 
 normalize_vector proc
+
+    push    eax
+    fld     d [edi + 0]
+    fmul    st(0), st(0)
+    fld     d [edi + 4]
+    fmul    st(0), st(0)
+    fld     d [edi + 8]
+    fmul    st(0), st(0)
+    faddp   st(1), st(0)
+    faddp   st(1), st(0)
+    fsqrt
+    ftst
+    fstsw   ax
+    sahf
+    jz      NV_zero
+
+    fld     d [edi + 0]
+    fdiv    st(0), st(1)
+    fstp    d [edi + 0]
+    fld     d [edi + 4]
+    fdiv    st(0), st(1)
+    fstp    d [edi + 4]
+    fld     d [edi + 8]
+    fdivrp  st(1), st(0)
+    fstp    d [edi + 8]
+    pop     eax
+    ret
+
+NV_zero:
+    ffree   st
+    xor     eax, eax
+    stosd
+    stosd
+    stosd
+    pop     eax
+    ret
+endp
+
+comment #
     push    eax
 
     fld     d [edi.vec_x]
@@ -247,7 +318,7 @@ normalize_vector proc
 @@quit:
     pop     eax
     ret
-endp
+endp #
 
 ;------------------------------------------------------------
 ;    in:    esi - offset to 1st vector
@@ -359,6 +430,8 @@ delta_angle dd 0.0061359
 
 SinCosLookups dd ?
 
+rot_matrix matrix ?
+
 mx_sin_x dd ?
 mx_cos_x dd ?
 mx_sin_y dd ?
@@ -366,7 +439,12 @@ mx_cos_y dd ?
 mx_sin_z dd ?
 mx_cos_z dd ?
 
-rot_matrix matrix ?
+sin_x dd ?
+cos_x dd ?
+sin_y dd ?
+cos_y dd ?
+sin_z dd ?
+cos_z dd ?
 
 code32 ends
 

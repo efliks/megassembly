@@ -6,10 +6,33 @@ locals
 
 
 code32 segment para public use32
-    assume cs:code32,  ds:code32
+    assume cs:code32, ds:code32
+
+init_sincos proc
+    mov     ebp, d [SinCosLookups]
+    xor     eax, eax
+
+    fldz
+isc_make:
+    fld     st
+    fld     st
+
+    fsin
+    fstp    d [ebp + eax + SINLOOKUP]
+    fcos
+    fstp    d [ebp + eax + COSLOOKUP]
+
+    fadd    d [delta_angle]
+    add     eax, 4
+    cmp     eax, MAX_DEGS * 4
+    jne     isc_make
+
+    ffree   st
+    ret
+endp
 
 ;------------------------------------------------------------
-;    in:    esi - offset to angles (float type!)
+;    in:    esi - offset to angles (32-bit integer)
 ;        edi - offset to 3x3 matrix
 ;    out:    none
 ;------------------------------------------------------------
@@ -234,6 +257,19 @@ translate_points proc
     fld     d [esi.z3d]
     fadd    perspective
 
+comment #
+    ftst
+    fstsw   ax
+    sahf
+    ja      @@point_ok
+
+    ffree   st
+    mov     w [edi.x2d], -100
+    mov     w [edi.y2d], -100
+    jmp     @@next_point #
+
+@@point_ok:
+
     fld     d [esi.x3d]
     fmul    perspective
     fdiv    st, st(1)
@@ -246,6 +282,7 @@ translate_points proc
     fadd    correct_y
     fistp   w [edi.y2d]
 
+@@next_point:
     add     esi, size point3d
     add     edi, size point2d
     dec     ecx
@@ -413,16 +450,52 @@ make_vector proc
     ret
 endp
 
+;------------------------------------------------------------
+
+; in: esi = 1st vertex, edi = 2nd vertex
+; out: st0 = lenght
+GetVectorLenght proc
+    fld     d [edi.x3d]
+    fsub    d [esi.x3d]
+    fmul    st, st
+
+    fld     d [edi.y3d]
+    fsub    d [esi.y3d]
+    fmul    st, st
+
+    fld     d [edi.z3d]
+    fsub    d [esi.z3d]
+    fmul    st, st
+    faddp   st(1), st
+    faddp   st(1), st
+    fsqrt
+
+    ret
+endp
+
+
 perspective dd 256.0
 correct_x dd 160.0
 correct_y dd 100.0
 
+; pi / (MAX_DEGS / 2)
+delta_angle dd 0.0061359
+
+SinCosLookups dd ?
+
+rot_matrix matrix ?
+
+mx_sin_x dd ?
+mx_cos_x dd ?
+mx_sin_y dd ?
+mx_cos_y dd ?
+mx_sin_z dd ?
+mx_cos_z dd ?
+
 sin_x dd ?
 cos_x dd ?
-
 sin_y dd ?
 cos_y dd ?
-
 sin_z dd ?
 cos_z dd ?
 
