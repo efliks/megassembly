@@ -152,15 +152,15 @@ sort_faces proc
 endp
 
 ;------------------------------------------------------------
-;    in:    esi - offset to struct3d
-;        stack: left,  right
+;    in:    esi = offset to struct3d
+;        stack: left, right
 ;    out:    none
 ;------------------------------------------------------------
 
 quick_sort proc
 
-@@left equ d [ebp+8]
-@@right equ d [ebp+12]
+@@left equ d [ebp + 08]
+@@right equ d [ebp + 12]
 
     push    ebp
     mov     ebp, esp
@@ -331,7 +331,6 @@ comment #
     movsx   eax, ax
     mov     t_y3, eax #
 
-
     mov     eax, edx
     shl     edx, 1
     shl     eax, 2
@@ -347,7 +346,6 @@ comment #
     inc     edx
     dec     ecx
     jnz     @@load_tex
-
 
     pop     edx
     mov     edi, o e_x1
@@ -510,25 +508,56 @@ init_point_normals proc
     ret
 endp
 
+;------------------------------------------------------------
+
+; in: st0 = dot-product
+MakeColor proc
+    fcom    d [DotMin]
+    fstsw   ax
+    sahf
+    jb      MC_err
+    fcom    d [DotMax]
+    fstsw   ax
+    sahf
+    ja      MC_err
+
+    fmul    d [GouraudColors]
+    fistp   d [MC_temp]
+    mov     eax, d [MC_temp]
+    ret
+
+MC_err:
+    ffree   st
+    xor     eax, eax
+    ret
+endp
+
 _63    dd 63.0
 
-sum_x    dd ?
-sum_y    dd ?
-sum_z    dd ?
-n_hit    dd ?
+f_x1 dw ?
+f_y1 dw ?
+f_x2 dw ?
+f_y2 dw ?
+f_x3 dw ?
+f_y3 dw ?
 
-vec1    vector3d ?
-vec2    vector3d ?
-vec3    vector3d ?
+sum_x dd ?
+sum_y dd ?
+sum_z dd ?
 
-rot_mx    matrix ?
+n_hit dd ?
 
-f_x1    dw ?
-f_y1    dw ?
-f_x2    dw ?
-f_y2    dw ?
-f_x3    dw ?
-f_y3    dw ?
+vec1 vector3d ?
+vec2 vector3d ?
+vec3 vector3d ?
+
+GouraudColors dd 63.0
+
+DotMin dd 0.0
+DotMax dd 1.0
+
+MC_temp dd ?
+rot_mx matrix ?
 
 code32 ends
 

@@ -28,6 +28,11 @@ struct3d struc
     s3d_CurrTime dd ?
 
     s3d_Movement dd ?
+
+    s3d_tex_coords dd ?  ; texture coordinates
+
+    s3d_bmap dd ?  ; bumpmap / texture
+    s3d_emap dd ?  ; environment map
 ends
 
 face struc
@@ -36,11 +41,15 @@ face struc
     face_v3 dw ?
 ends
 
-global RotateTranslateStruct3d:PROC
+global sort_faces:PROC
+global quick_sort:PROC
 
-global CenterStruct3d:PROC
-global ScaleStruct3d:PROC
+global rotate_translate_struct3d:PROC
+global init_point_normals:PROC
+
+global render_struct3d:PROC
 
 global DrawGouraudFaces:PROC
 
-global init_point_normals:PROC
+global CenterStruct3d:PROC
+global ScaleStruct3d:PROC

@@ -15,6 +15,19 @@ struct3d struc
 
     s3d_point_nrm dd ?  ; point normals
     s3d_r_point_nrm dd ?  ; rotated point normals
+    
+    s3d_AngleX dd ?
+    s3d_AngleY dd ?
+    s3d_AngleZ dd ?
+
+    s3d_DeltaX dd ?
+    s3d_DeltaY dd ?
+    s3d_DeltaZ dd ?
+
+    s3d_MovingTime dd ?
+    s3d_CurrTime dd ?
+
+    s3d_Movement dd ?
 
     s3d_tex_coords dd ?  ; texture coordinates
 
@@ -35,3 +48,8 @@ global rotate_translate_struct3d:PROC
 global init_point_normals:PROC
 
 global render_struct3d:PROC
+
+global DrawGouraudFaces:PROC
+
+global CenterStruct3d:PROC
+global ScaleStruct3d:PROC
