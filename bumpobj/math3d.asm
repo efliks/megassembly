@@ -32,9 +32,9 @@ isc_make:
 endp
 
 ;------------------------------------------------------------
-;    in:    esi - offset to angles (32-bit integer)
-;        edi - offset to 3x3 matrix
-;    out:    none
+;    in:   esi - offset to angles (float)
+;          edi - offset to 3x3 matrix
+;    out:  none
 ;------------------------------------------------------------
 
 mx_rotation_matrix proc
@@ -54,114 +54,93 @@ mx_rotation_matrix proc
     dec     ecx
     jnz     @@load
 
-    fld     d [cos_y]
-    fmul    d [cos_z]
-    fstp    d [edi + 0 * 4 + 0 * 12]
+    call    mx_compute_rotation_matrix
+    ret
+endp
 
-    fld     d [sin_x]
-    fmul    d [sin_y]
-    fmul    d [cos_z]
-    fld     d [cos_x]
-    fchs
-    fmul    d [sin_z]
-    faddp   st(1), st(0)
-    fstp    d [edi + 0 * 4 + 1 * 12]
+;------------------------------------------------------------
+;    in:   esi - offset to angles (double word integer)
+;          edi - offset to 3x3 matrix
+;    out:  none
+;------------------------------------------------------------
 
-    fld     d [cos_x]
-    fmul    d [sin_y]
-    fmul    d [cos_z]
-    fld     d [sin_x]
-    fmul    d [sin_z]
-    faddp   st(1), st(0)
-    fstp    d [edi + 0 * 4 + 2 * 12]
+mx_rotation_matrix_lookup proc
+    mov     ebp, d [SinCosLookups]
+    mov     ebx, o sin_x
+    mov     ecx, 3
+    cld
+@@load:
+    lodsd
+    and     eax, MAX_DEGS - 1
+    shl     eax, 2
+    mov     edx, d [ebp + eax + SINLOOKUP]
+    mov     d [ebx], edx
+    add     ebx, 4
+    mov     edx, d [ebp + eax + COSLOOKUP]
+    mov     d [ebx], edx
+    add     ebx, 4
+    dec     ecx
+    jnz     @@load
 
-    fld     d [cos_y]
-    fmul    d [sin_z]
-    fstp    d [edi + 1 * 4 + 0 * 12]
+    call    mx_compute_rotation_matrix
+    ret
+endp
 
-    fld     d [sin_x]
-    fmul    d [sin_y]
-    fmul    d [sin_z]
-    fld     d [cos_x]
-    fmul    d [cos_z]
-    faddp   st(1), st(0)
-    fstp    d [edi + 1 * 4 + 1 * 12]
+mx_compute_rotation_matrix proc
 
-    fld     d [cos_x]
-    fmul    d [sin_y]
-    fmul    d [sin_z]
-    fld     d [sin_x]
-    fchs
-    fmul    d [cos_z]
-    faddp   st(1), st(0)
-    fstp    d [edi + 1 * 4 + 2 * 12]
-
-    fld     d [sin_y]
-    fchs
-    fstp    d [edi + 2 * 4 + 0 * 12]
-
-    fld     d [cos_y]
-    fmul    d [sin_x]
-    fstp    d [edi + 2 * 4 + 1 * 12]
-
-    fld     d [cos_x]
-    fmul    d [cos_y]
-    fstp    d [edi + 2 * 4 + 2 * 12]
-
-comment #
-    fld     mx_cos_y
-    fmul    mx_cos_z
+    fld     cos_y
+    fmul    cos_z
     fstp    d [edi.m_00]
 
-    fld     mx_sin_x
-    fmul    mx_sin_y
-    fmul    mx_cos_z
-    fld     mx_cos_x
+    fld     sin_x
+    fmul    sin_y
+    fmul    cos_z
+    fld     cos_x
     fchs
-    fmul    mx_sin_z
+    fmul    sin_z
     faddp   st(1), st
     fstp    d [edi.m_10]
 
-    fld     mx_cos_x
-    fmul    mx_sin_y
-    fmul    mx_cos_z
-    fld     mx_sin_x
-    fmul    mx_sin_z
+    fld     cos_x
+    fmul    sin_y
+    fmul    cos_z
+    fld     sin_x
+    fmul    sin_z
     faddp   st(1), st
     fstp    d [edi.m_20]
 
-    fld     mx_cos_y
-    fmul    mx_sin_z
+    fld     cos_y
+    fmul    sin_z
     fstp    d [edi.m_01]
 
-    fld     mx_sin_x
-    fmul    mx_sin_y
-    fmul    mx_sin_z
-    fld     mx_cos_x
-    fmul    mx_cos_z
+    fld     sin_x
+    fmul    sin_y
+    fmul    sin_z
+    fld     cos_x
+    fmul    cos_z
     faddp   st(1), st
     fstp    d [edi.m_11]
 
-    fld     mx_cos_x
-    fmul    mx_sin_y
-    fmul    mx_sin_z
-    fld     mx_sin_x
+    fld     cos_x
+    fmul    sin_y
+    fmul    sin_z
+    fld     sin_x
     fchs
-    fmul    mx_cos_z
+    fmul    cos_z
     faddp   st(1), st
     fstp    d [edi.m_21]
 
-    fld     mx_sin_y
+    fld     sin_y
     fchs
     fstp    d [edi.m_02]
 
-    fld     mx_cos_y
-    fmul    mx_sin_x
+    fld     cos_y
+    fmul    sin_x
     fstp    d [edi.m_12]
 
-    fld     mx_cos_x
-    fmul    mx_cos_y
-    fstp    d [edi.m_22] #
+    fld     cos_x
+    fmul    cos_y
+    fstp    d [edi.m_22]
 
     ret
 endp
@@ -484,13 +463,6 @@ delta_angle dd 0.0061359
 SinCosLookups dd ?
 
 rot_matrix matrix ?
-
-mx_sin_x dd ?
-mx_cos_x dd ?
-mx_sin_y dd ?
-mx_cos_y dd ?
-mx_sin_z dd ?
-mx_cos_z dd ?
 
 sin_x dd ?
 cos_x dd ?

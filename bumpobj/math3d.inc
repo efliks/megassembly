@@ -38,6 +38,7 @@ SINCOS_SIZE equ COSLOOKUP + MAX_DEGS * 4
 global init_sincos:PROC
 
 global mx_rotation_matrix:PROC
+global mx_rotation_matrix_lookup:PROC
 global mx_rotate_points:PROC
 
 global translate_points:PROC

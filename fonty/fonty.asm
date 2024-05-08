@@ -379,7 +379,7 @@ MoveStruct3d proc
     push    esi
     lea    esi, d [esi.s3d_AngleX]
     mov     edi, o rot_matrix
-    call    mx_rotation_matrix
+    call    mx_rotation_matrix_lookup
     pop     ebp
 
     mov     esi, d [ebp.s3d_points]
