@@ -1,5 +1,6 @@
 include sys.inc
 include math3d.inc
+include struct3d.inc
 include bumptri.inc
 include common.inc
 include engine.inc
@@ -387,128 +388,6 @@ comment #
 endp
 
 ;------------------------------------------------------------
-;    in:    esi - offset to struct3d
-;    out:    none
-;------------------------------------------------------------
-
-init_point_normals proc
-    xor     ecx, ecx
-@@make_n:
-
-    mov     sum_x, 0
-    mov     sum_y, 0
-    mov     sum_z, 0
-
-    mov     n_hit, 0
-
-    mov     ebp, d [esi.s3d_faces]
-    mov     edx, d [esi.s3d_n_faces]
-@@f:
-
-    movzx   eax, w [ebp.face_v1]
-    cmp     eax, ecx
-    je      @@face_hit
-    movzx   eax, w [ebp.face_v2]
-    cmp     eax, ecx
-    je      @@face_hit
-    movzx   eax, w [ebp.face_v3]
-    cmp     eax, ecx
-    je      @@face_hit
-
-    jmp     @@next_f
-@@face_hit:
-    inc     n_hit
-
-      ; make face-normal
-    push    edx
-    mov     edx, esi
-
-
-    movzx   esi, w [ebp.face_v1]
-    mov     eax, esi
-    shl     esi, 2
-    shl     eax, 3
-    add     esi, eax
-    add     esi, d [edx.s3d_points]
-
-    movzx   edi, w [ebp.face_v2]
-    mov     eax, edi
-    shl     edi, 2
-    shl     eax, 3
-    add     edi, eax
-    add     edi, d [edx.s3d_points]
-
-    mov     ebx, o vec1
-    call    make_vector
-
-    mov     esi, edi
-
-    movzx   edi, w [ebp.face_v3]
-    mov     eax, edi
-    shl     edi, 2
-    shl     eax, 3
-    add     edi, eax
-    add     edi, d [edx.s3d_points]
-
-    mov     ebx, o vec2
-    call    make_vector
-
-    mov     esi, o vec1
-    mov     edi, o vec2
-    mov     ebx, o vec3
-    call    cross_product
-
-
-    fld     sum_x
-    fadd    vec3.vec_x
-    fstp    sum_x
-
-    fld     sum_y
-    fadd    vec3.vec_y
-    fstp    sum_y
-
-    fld     sum_z
-    fadd    vec3.vec_z
-    fstp    sum_z
-
-
-    mov     esi, edx
-    pop     edx
-@@next_f:
-    add     ebp, size face
-    dec     edx
-    jnz     @@f
-
-
-    mov     eax, ecx
-    mov     ebx, eax
-    shl     eax, 2
-    shl     ebx, 3
-    add     eax, ebx
-    add     eax, d [esi.s3d_point_nrm]
-
-    fld     sum_x
-    fidiv   n_hit
-    fstp    d [eax.vec_x]
-
-    fld     sum_y
-    fidiv   n_hit
-    fstp    d [eax.vec_y]
-
-    fld     sum_z
-    fidiv   n_hit
-    fstp    d [eax.vec_z]
-
-    mov     edi, eax
-    call    normalize_vector
-
-    inc     ecx
-    cmp     ecx, d [esi.s3d_n_points]
-    jne     @@make_n
-    ret
-endp
-
-;------------------------------------------------------------
 
 ; in: st0 = dot-product
 MakeColor proc
@@ -540,12 +419,6 @@ f_x2 dw ?
 f_y2 dw ?
 f_x3 dw ?
 f_y3 dw ?
-
-sum_x dd ?
-sum_y dd ?
-sum_z dd ?
-
-n_hit dd ?
 
 vec1 vector3d ?
 vec2 vector3d ?

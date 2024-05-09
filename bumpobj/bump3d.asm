@@ -4,6 +4,7 @@ include stub.inc
 include sys.inc
 include data.inc
 include math3d.inc
+include struct3d.inc
 include engine.inc
 include common.inc
 
