@@ -253,7 +253,7 @@ SGF_x:
     call    S3d_Long2Float
 
     mov     edi, esi
-    call    CenterStruct3d_Fog
+    call    CenterStruct3d
 
 
     mov     esi, edi

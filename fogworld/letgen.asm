@@ -350,7 +350,7 @@ ML3d_normal:
     call    NormalizeStruct3d
 
     pop     edi
-    call    CenterStruct3d_Fog
+    call    CenterStruct3d
 
     pop     edi
     fild    d [_size]

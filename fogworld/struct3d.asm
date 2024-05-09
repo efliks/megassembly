@@ -360,84 +360,6 @@ endp
 ;
 ;    in: edi = ptr to struct3d
 ;************************************************************
-CenterStruct3d_Fog proc
-    push    edi
-    mov     edi, o min_x
-    xor     eax, eax
-    mov     ecx, 6
-    rep     stosd
-    pop     edi
-
-    mov     esi, d [edi + S3D_PTR_B_VERTS]
-    mov     ecx, d [edi + S3D_N_VERTS]
-CS3dA_1:
-    push    ecx
-
-
-    mov     ecx, 3
-    mov     ebp, o min_x
-CS3dA_2:
-    fld     d [esi]
-    fcom    d [ebp + 0]    ; min
-    fstsw   ax
-    sahf
-    ja      CS3dA_skip1
-    fstp    d [ebp + 0]
-    jmp     CS3dA_ok1
-CS3dA_skip1:
-    ffree   st(0)
-CS3dA_ok1:
-    fld     d [esi]
-    fcom    d [ebp + 4]    ; max
-    fstsw   ax
-    sahf
-    jb      CS3dA_skip2
-    fstp    d [ebp + 4]
-    jmp     CS3dA_ok2
-CS3dA_skip2:
-    ffree   st(0)
-CS3dA_ok2:
-    add     esi, 4
-    add     ebp, 8
-    loop    CS3dA_2
-
-    pop     ecx
-    loop    CS3dA_1
-
-
-    mov     ecx, 3
-    mov     ebp, o min_x
-CS3dA_make:
-    fld     d [ebp + 4]    ; max
-    fsub    d [ebp + 0]    ; min
-    fmul    d [CS3dA_mulval]
-    fstp    d [ebp + 0]    ; min
-    add     ebp, 8
-    loop    CS3dA_make
-
-    mov     esi, d [edi + S3D_PTR_B_VERTS]
-    mov     ecx, d [edi + S3D_N_VERTS]
-CS3dA_final:
-    fld     d [esi + 0]
-    fsub    d [min_x]
-    fstp    d [esi + 0]
-
-    fld     d [esi + 4]
-    fsub    d [min_y]
-    fstp    d [esi + 4]
-
-    fld     d [esi + 8]
-    fsub    d [min_z]
-    fstp    d [esi + 8]
-
-    add     esi, 12
-    loop    CS3dA_final
-    ret
-endp
-
-;------------------------------------------------------------
-
-; in: edi = ptr to struct3d
 CenterStruct3d proc
     fldz
     fst     q [str3d_ox]
@@ -631,13 +553,6 @@ f_x2 dw ?
 f_y2 dw ?
 f_x3 dw ?
 f_y3 dw ?
-
-min_x dd ?
-max_x dd ?
-min_y dd ?
-max_y dd ?
-min_z dd ?
-max_z dd ?
 
 sum_x dd ?
 sum_y dd ?
