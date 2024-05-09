@@ -350,14 +350,14 @@ ML3d_normal:
     call    NormalizeStruct3d
 
     pop     edi
-    call    CenterStruct3d
+    call    CenterStruct3d_Fog
 
     pop     edi
     fild    d [_size]
     fld     st(0)
     fld     st(0)
     fadd    st(0), st(0)  ; scale_z *= 2
-    call    ScaleStruct3d
+    call    ScaleStruct3d_Fog
 
     popad
 ML3d_leave:

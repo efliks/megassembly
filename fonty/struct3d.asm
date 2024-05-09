@@ -322,15 +322,13 @@ GSR_next:
     ret
 endp
 
-comment #
-
 ;************************************************************
 ;    ScaleStruct3d()
 ;
 ;    in: edi = ptr to struct3d,
 ;    st(0) = scalez, st(1) = scaley, st(2) = scalex
 ;************************************************************
-ScaleStruct3d proc
+ScaleStruct3d_Fog proc
     mov     ecx, d [edi + S3D_N_VERTS]
     mov     edi, d [edi + S3D_PTR_B_VERTS]
 
@@ -362,7 +360,7 @@ endp
 ;
 ;    in: edi = ptr to struct3d
 ;************************************************************
-CenterStruct3d proc
+CenterStruct3d_Fog proc
     push    edi
     mov     edi, o min_x
     xor     eax, eax
@@ -436,9 +434,30 @@ CS3dA_final:
     loop    CS3dA_final
     ret
 endp
-#
 
 ;------------------------------------------------------------
+
+; in: edi = ptr to struct3d, filled ScaleX, ScaleY, ScaleZ
+ScaleStruct3d proc
+    mov     ecx, d [edi.s3d_n_points]
+    mov     ebx, d [edi.s3d_points]
+SS3d_scale:
+    fld     d [ebx.x3d]
+    fmul    d [ScaleX]
+    fstp    d [ebx.x3d]
+
+    fld     d [ebx.y3d]
+    fmul    d [ScaleY]
+    fstp    d [ebx.y3d]
+
+    fld     d [ebx.z3d]
+    fmul    d [ScaleZ]
+    fstp    d [ebx.z3d]
+
+    add     ebx, size point3d
+    loop    SS3d_scale
+    ret
+endp
 
 ; in: edi = ptr to struct3d
 CenterStruct3d proc
@@ -496,30 +515,6 @@ CS3d_move:
 
     add     ebp, size point3d
     loop    CS3d_move
-    ret
-endp
-
-;------------------------------------------------------------
-
-; in: edi = ptr to struct3d, filled ScaleX, ScaleY, ScaleZ
-ScaleStruct3d proc
-    mov     ecx, d [edi.s3d_n_points]
-    mov     ebx, d [edi.s3d_points]
-SS3d_scale:
-    fld     d [ebx.x3d]
-    fmul    d [ScaleX]
-    fstp    d [ebx.x3d]
-
-    fld     d [ebx.y3d]
-    fmul    d [ScaleY]
-    fstp    d [ebx.y3d]
-
-    fld     d [ebx.z3d]
-    fmul    d [ScaleZ]
-    fstp    d [ebx.z3d]
-
-    add     ebx, size point3d
-    loop    SS3d_scale
     ret
 endp
 
