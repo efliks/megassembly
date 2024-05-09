@@ -1,4 +1,5 @@
 include engine.inc
+include struct3d.inc
 include share.inc
 
 include world1.inc

@@ -1,4 +1,5 @@
 include s3dgen.inc
+include struct3d.inc
 include engine.inc
 include share.inc
 

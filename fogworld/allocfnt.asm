@@ -1,6 +1,7 @@
 include allocfnt.inc
 include math3d.inc
 include letgen.inc
+include struct3d.inc
 include engine.inc
 include share.inc
 

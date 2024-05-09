@@ -1,4 +1,5 @@
 include math3d.inc
+include struct3d.inc
 include engine.inc
 include s3dgen.inc
 include letgen.inc

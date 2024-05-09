@@ -28,3 +28,10 @@ matrix struc
     m_21   dd  ?
     m_22   dd  ?
 ends
+
+global make_vector:PROC
+global normalize_vector:PROC
+global get_vector_lenght:PROC
+
+global cross_product:PROC
+global dot_product:PROC

@@ -6,6 +6,7 @@ include s3dgen.inc
 include share.inc
 include palette.inc
 include engine.inc
+include struct3d.inc
 
 include world1.inc
 include world2.inc
