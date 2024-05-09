@@ -357,7 +357,7 @@ ML3d_normal:
     fld     st(0)
     fld     st(0)
     fadd    st(0), st(0)  ; scale_z *= 2
-    call    ScaleStruct3d_Fog
+    call    ScaleStruct3d
 
     popad
 ML3d_leave:

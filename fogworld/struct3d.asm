@@ -328,7 +328,7 @@ endp
 ;    in: edi = ptr to struct3d,
 ;    st(0) = scalez, st(1) = scaley, st(2) = scalex
 ;************************************************************
-ScaleStruct3d_Fog proc
+ScaleStruct3d proc
     mov     ecx, d [edi + S3D_N_VERTS]
     mov     edi, d [edi + S3D_PTR_B_VERTS]
 
@@ -436,28 +436,6 @@ CS3dA_final:
 endp
 
 ;------------------------------------------------------------
-
-; in: edi = ptr to struct3d, filled ScaleX, ScaleY, ScaleZ
-ScaleStruct3d proc
-    mov     ecx, d [edi.s3d_n_points]
-    mov     ebx, d [edi.s3d_points]
-SS3d_scale:
-    fld     d [ebx.x3d]
-    fmul    d [ScaleX]
-    fstp    d [ebx.x3d]
-
-    fld     d [ebx.y3d]
-    fmul    d [ScaleY]
-    fstp    d [ebx.y3d]
-
-    fld     d [ebx.z3d]
-    fmul    d [ScaleZ]
-    fstp    d [ebx.z3d]
-
-    add     ebx, size point3d
-    loop    SS3d_scale
-    ret
-endp
 
 ; in: edi = ptr to struct3d
 CenterStruct3d proc
@@ -670,10 +648,6 @@ n_hit dd ?
 str3d_ox dq ?
 str3d_oy dq ?
 str3d_oz dq ?
-
-ScaleX dd 0.3
-ScaleY dd 0.3
-ScaleZ dd 0.6
 
 rot_mx matrix ?
 

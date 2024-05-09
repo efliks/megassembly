@@ -325,8 +325,13 @@ ML3d_not_empty: #
 ML3d_normal:
     mov     edi, o Buffer3d
     call    CenterStruct3d
+
+    fld     d [ScaleX]
+    fld     d [ScaleY]
+    fld     d [ScaleZ]
     mov     edi, o Buffer3d
     call    ScaleStruct3d
+
     popad
     call    SaveLetter3d
 
@@ -588,6 +593,10 @@ CubeFaces    dw 0, 1, 2,  0, 2, 3,  1, 5, 6,  1, 6, 2,  4, 0, 3,  4, 3, 7,  4, 5
 
 _is3d dd 0
 _size dd 0
+
+ScaleX dd 0.3
+ScaleY dd 0.3
+ScaleZ dd 0.6
 
 GetParamsMode db 0
 

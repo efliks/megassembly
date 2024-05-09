@@ -66,7 +66,6 @@ global NormalizeStruct3d:PROC
 global ScaleStruct3d:PROC
 global CenterStruct3d:PROC
 
-global ScaleStruct3d_Fog:PROC
 global CenterStruct3d_Fog:PROC
 
 global sort_faces:PROC
