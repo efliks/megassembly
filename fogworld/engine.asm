@@ -365,7 +365,7 @@ RW_CamLoop:
 
     push    edx
     mov     esi, edx
-    call    sort_faces
+    call    sort_faces_custom
     pop     edx
     call    render_struct3d
     ret
@@ -616,7 +616,7 @@ endp
 ;    out:    none
 ;------------------------------------------------------------
 
-sort_faces proc
+sort_faces_custom proc
     mov     edi, dword ptr [esi.s3d_faces]
     xor     ecx, ecx
     mov     dword ptr [esi.s3d_vis_faces], 0
@@ -741,111 +741,6 @@ _sf_check1:
     push    large 0
     call    quick_sort
     ret
-endp
-
-;------------------------------------------------------------
-;    in:    esi - offset to struct3d
-;        stack: left,  right
-;    out:    none
-;------------------------------------------------------------
-
-quick_sort proc
-
-@@left equ dword ptr [ebp+8]
-@@right equ dword ptr [ebp+12]
-
-    push    ebp
-    mov     ebp, esp
-
-    mov     eax, @@left
-    mov     ebx, @@right
-
-        ; element=face_depth[(left+right)>>1];
-    mov     edi, eax
-    add     edi, ebx
-    sar     edi, 1
-    shl     edi, 1
-    add     edi, dword ptr [esi.s3d_depths]
-    mov     dx, word ptr [edi]
-
-        ; while(i<j)
-    cmp     eax, ebx
-    jge     @@break_main
-@@main:
-
-        ; while(face_depth[i]>element) i++;
-    mov     edi, eax
-    shl     edi, 1
-    add     edi, dword ptr [esi.s3d_depths]
-@@small1:
-    cmp     word ptr [edi], dx
-    jle     @@break_small1
-    inc     eax
-    add     edi, 2
-    jmp     @@small1
-@@break_small1:
-
-        ; while(face_depth[j]<element) j--;
-    mov     edi, ebx
-    shl     edi, 1
-    add     edi, dword ptr [esi.s3d_depths]
-@@small2:
-    cmp     word ptr [edi], dx
-    jge     @@break_small2
-    dec     ebx
-    sub     edi, 2
-    jmp     @@small2
-@@break_small2:
-
-        ; if(i<=j)
-    cmp     eax, ebx
-    jg      @@skip_xchg
-
-    mov     edi, dword ptr [esi.s3d_depths]
-    mov     cx, word ptr [edi + eax*2]
-    xchg    cx, word ptr [edi + ebx*2]
-    mov     word ptr [edi + eax*2], cx
-
-    mov     edi, dword ptr [esi.s3d_order]
-    mov     cx, word ptr [edi + eax*2]
-    xchg    cx, word ptr [edi + ebx*2]
-    mov     word ptr [edi + eax*2], cx
-
-    inc     eax
-    dec     ebx
-
-@@skip_xchg:
-    cmp     eax, ebx
-    jl      @@main
-
-@@break_main:
-
-        ; if(j>left) depth_sorting(left, j);
-    cmp     ebx, @@left
-    jle     @@skip_call1
-
-    push    eax
-
-    push    ebx
-    push    @@left
-    call    quick_sort
-
-    pop     eax
-
-@@skip_call1:
-
-        ; if(i<right) depth_sorting(i, right);
-    cmp     eax, @@right
-    jge     @@skip_call2
-
-    push    @@right
-    push    eax
-    call    quick_sort
-
-@@skip_call2:
-
-    pop     ebp
-    ret     8
 endp
 
 ;------------------------------------------------------------

@@ -65,3 +65,8 @@ global GetStruct3dRadius:PROC
 global NormalizeStruct3d:PROC
 global ScaleStruct3d:PROC
 global CenterStruct3d:PROC
+
+global sort_faces:PROC
+global quick_sort:PROC
+
+global rotate_translate_struct3d:PROC

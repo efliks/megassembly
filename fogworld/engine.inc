@@ -96,4 +96,3 @@ global CurrColorProc:DWORD
 ; copied from oldeng
 
 global render_struct3d:PROC
-global sort_faces:PROC
