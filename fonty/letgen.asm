@@ -2,7 +2,6 @@
 
 include share.inc
 include sys.inc
-include engine.inc
 include math3d.inc
 include struct3d.inc
 include letgen.inc
