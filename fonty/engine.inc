@@ -1,3 +1,0 @@
-; engine
-
-global DrawGouraudFaces:PROC

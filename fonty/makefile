@@ -3,8 +3,8 @@ TLINK = c:\tasm\bin\tlink.exe
 
 all: fonty.exe
 
-fonty.exe: stub.obj sys.obj fonty.obj math3d.obj engine.obj grd3.obj struct3d.obj letgen.obj
-	$(TLINK) /3 /x stub.obj sys.obj fonty.obj math3d.obj engine.obj grd3.obj struct3d.obj letgen.obj,fonty.exe
+fonty.exe: stub.obj sys.obj fonty.obj math3d.obj grd3.obj struct3d.obj letgen.obj
+	$(TLINK) /3 /x stub.obj sys.obj fonty.obj math3d.obj grd3.obj struct3d.obj letgen.obj,fonty.exe
 
 .asm.obj:
 	$(TASM) /m $<
