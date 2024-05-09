@@ -7,6 +7,8 @@ include s3dgen.inc
 include letgen.inc
 include share.inc
 
+T_STD_NUM_OF_VERTS equ 512
+
 .386p
 
 

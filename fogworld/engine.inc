@@ -51,8 +51,6 @@ T_CURR_POSITION equ 8
 
 TRACK_SIZE equ 12
 
-T_STD_NUM_OF_VERTS equ MAX_DEGS
-
 ; face params
 FP_PTR_TEXTURE equ 0
 FP_X1 equ 4
@@ -66,8 +64,6 @@ FACE_PARAMS_SIZE equ 10
 
 MOVE_PAL_COLOR equ 12
 MIN_COLOR equ 1
-
-MAX_DEGS equ 512
 
 
 global MakeRotationMatrix:PROC

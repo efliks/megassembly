@@ -467,7 +467,7 @@ GetVertexColorDist proc
     push    esi
     mov     esi, o DefaultCamPos
     mov     edi, ebx
-    call    get_vector_lenght
+    call    GetVectorLenght
     fmul    d [GVCD_z_const]
     pop     esi
     pop     edi

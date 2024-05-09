@@ -29,9 +29,27 @@ matrix struc
     m_22   dd  ?
 ends
 
+MAX_DEGS equ 1024
+
+SINLOOKUP equ 0
+COSLOOKUP equ SINLOOKUP + MAX_DEGS * 4
+SINCOS_SIZE equ COSLOOKUP + MAX_DEGS * 4
+
+global init_sincos:PROC
+
+global mx_rotation_matrix:PROC
+global mx_rotation_matrix_lookup:PROC
+global mx_rotate_points:PROC
+
+global translate_points:PROC
+
+global dot_product:PROC
+global cross_product:PROC
+
 global make_vector:PROC
 global normalize_vector:PROC
-global get_vector_lenght:PROC
+global GetVectorLenght:PROC
 
-global cross_product:PROC
-global dot_product:PROC
+global SinCosLookups:DWORD
+
+global rot_matrix:MATRIX
