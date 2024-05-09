@@ -4,6 +4,7 @@ include sys.inc
 include stub.inc
 include share.inc
 include math3d.inc
+include struct3d.inc
 include engine.inc
 include letgen.inc
 
