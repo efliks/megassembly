@@ -11,4 +11,7 @@ global GrdCol1:DWORD
 global GrdCol2:DWORD
 global GrdCol3:DWORD
 
+global SetShadowLines:PROC
+global UnsetShadowLines:PROC
+
 global GouraudTriangle:PROC

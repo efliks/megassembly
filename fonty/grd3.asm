@@ -281,6 +281,14 @@ endp
 ; ecx = y
 ShadowFlatLine proc
     push    eax
+
+    mov     al, byte ptr [shouldUseShadow]
+    cmp     al, 1
+    je      @@use_shadow_line
+    pop     eax
+    ret
+
+@@use_shadow_line:
     push    ebx
     push    ecx
 
@@ -348,6 +356,18 @@ SFL_quit:
     ret
 endp
 
+SetShadowLines proc
+    mov     al, 1
+    mov     byte ptr [shouldUseShadow], al
+    ret
+endp
+
+UnsetShadowLines proc
+    xor     al, al
+    mov     byte ptr [shouldUseShadow], al
+    ret
+endp
+
 
 GrdX1 dd ?
 GrdY1 dd ?
@@ -367,6 +387,8 @@ GrdDeltaX23 dd ?
 GrdDeltaC12 dd ?
 GrdDeltaC13 dd ?
 GrdDeltaC23 dd ?
+
+shouldUseShadow db 0
 
 code32 ends
 

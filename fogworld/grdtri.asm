@@ -145,6 +145,7 @@ GT_d23_done:
     cmp     ecx, d [GrdY2]
     jge     GT_end_loop12
 GT_loop12:
+    call    ShadowFlatLine
     call    GouraudClippedLine
 
     add     eax, d [GrdDeltaX13]
@@ -166,6 +167,7 @@ GT_end_loop12:
     mov     ebp, d [GrdCol2]
     shl     ebp, GT_SHIFT
 GT_loop23:
+    call    ShadowFlatLine
     call    GouraudClippedLine
 
     add     eax, d [GrdDeltaX13]
@@ -279,6 +281,14 @@ endp
 ; ecx = y
 ShadowFlatLine proc
     push    eax
+
+    mov     al, byte ptr [shouldUseShadow]
+    cmp     al, 1
+    je      @@use_shadow_line
+    pop     eax
+    ret
+
+@@use_shadow_line:
     push    ebx
     push    ecx
 
@@ -346,6 +356,18 @@ SFL_quit:
     ret
 endp
 
+SetShadowLines proc
+    mov     al, 1
+    mov     byte ptr [shouldUseShadow], al
+    ret
+endp
+
+UnsetShadowLines proc
+    xor     al, al
+    mov     byte ptr [shouldUseShadow], al
+    ret
+endp
+
 
 GrdX1 dd ?
 GrdY1 dd ?
@@ -365,6 +387,8 @@ GrdDeltaX23 dd ?
 GrdDeltaC12 dd ?
 GrdDeltaC13 dd ?
 GrdDeltaC23 dd ?
+
+shouldUseShadow db 0
 
 code32 ends
 

@@ -6,6 +6,7 @@ include share.inc
 include math3d.inc
 include struct3d.inc
 include engine.inc
+include grd3.inc
 include letgen.inc
 
 move3d_struct struc
@@ -54,6 +55,7 @@ entrypoint proc
     mov     edi, d [BackTex]
     call    MakeTex
 
+    call    SetShadowLines
 
 ;------------------------------------------------------------
 ;    generate 3d letters
