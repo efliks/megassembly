@@ -1,4 +1,3 @@
-include sys.inc
 include math3d.inc
 include struct3d.inc
 include bumptri.inc
@@ -57,37 +56,6 @@ render_struct3d proc
     jnz     @@load_tri
     pop     edi
 
-
-comment #
-    movzx   ebx, w [edi.face_v1]
-    shl     ebx, 2
-    add     ebx, d [esi.s3d_t_points]
-    movsx   eax, w [ebx.x2d]
-    mov     t_x1, eax
-    mov     ax, w [ebx.y2d]
-    movsx   eax, ax
-    mov     t_y1, eax
-
-    movzx   ebx, w [edi.face_v2]
-    shl     ebx, 2
-    add     ebx, d [esi.s3d_t_points]
-    mov     ax, w [ebx.x2d]
-    movsx   eax, ax
-    mov     t_x2, eax
-    mov     ax, w [ebx.y2d]
-    movsx   eax, ax
-    mov     t_y2, eax
-
-    movzx   ebx, w [edi.face_v3]
-    shl     ebx, 2
-    add     ebx, d [esi.s3d_t_points]
-    mov     ax, w [ebx.x2d]
-    movsx   eax, ax
-    mov     t_x3, eax
-    mov     ax, w [ebx.y2d]
-    movsx   eax, ax
-    mov     t_y3, eax #
-
     mov     eax, edx
     shl     edx, 1
     shl     eax, 2
@@ -143,42 +111,7 @@ comment #
     ret
 endp
 
-;------------------------------------------------------------
-
-; in: st0 = dot-product
-MakeColor proc
-    fcom    d [DotMin]
-    fstsw   ax
-    sahf
-    jb      MC_err
-    fcom    d [DotMax]
-    fstsw   ax
-    sahf
-    ja      MC_err
-
-    fmul    d [GouraudColors]
-    fistp   d [MC_temp]
-    mov     eax, d [MC_temp]
-    ret
-
-MC_err:
-    ffree   st
-    xor     eax, eax
-    ret
-endp
-
-_63    dd 63.0
-
-vec1 vector3d ?
-vec2 vector3d ?
-vec3 vector3d ?
-
-GouraudColors dd 63.0
-
-DotMin dd 0.0
-DotMax dd 1.0
-
-MC_temp dd ?
+_63 dd 63.0
 
 code32 ends
 
