@@ -1,9 +1,9 @@
 TASM = c:\tasm\bin\tasm.exe
 TLINK = c:\tasm\bin\tlink.exe
 
-all: mgssmbly.exe
+all: fogworld.exe
 
-mgssmbly.exe: stub.obj sys.obj allocfnt.obj engine.obj flattri.obj fogtro.obj grdtri.obj letgen.obj math3d.obj palette.obj s3dgen.obj struct3d.obj world1.obj world2.obj world3.obj 
+fogworld.exe: stub.obj sys.obj allocfnt.obj engine.obj flat3.obj fogworld.obj grd3.obj letgen.obj math3d.obj fogpal.obj s3dgen.obj struc3d.obj world1.obj world2.obj world3.obj 
 	$(TLINK) @tlink.txt
 
 .asm.obj:

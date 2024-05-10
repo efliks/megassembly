@@ -1,5 +1,5 @@
 include sys.inc
-include share.inc
+include aliasy.inc
 include grd3.inc
 
 GT_SHIFT equ 12

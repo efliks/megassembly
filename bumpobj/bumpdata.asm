@@ -1,4 +1,4 @@
-include data.inc
+include bumpdata.inc
 
 .386p
 

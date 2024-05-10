@@ -2,11 +2,11 @@
 
 include stub.inc
 include sys.inc
-include data.inc
+include bumpdata.inc
 include math3d.inc
-include struct3d.inc
-include bumptri.inc
-include common.inc
+include struc3d.inc
+include bump3.inc
+include aliasy.inc
 
 TXT_WAIT equ 20
 TXT_COL equ 63 - 16

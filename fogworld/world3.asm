@@ -1,9 +1,9 @@
 include math3d.inc
-include struct3d.inc
+include struc3d.inc
 include engine.inc
 include s3dgen.inc
 include letgen.inc
-include share.inc
+include aliasy.inc
 
 include world1.inc
 include world3.inc

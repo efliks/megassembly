@@ -1,5 +1,5 @@
 include math3d.inc
-include common.inc
+include aliasy.inc
 
 .386p
 locals

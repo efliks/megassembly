@@ -1,4 +1,4 @@
-include palette.inc
+include fogpal.inc
 
 .386
 

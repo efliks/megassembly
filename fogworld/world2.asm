@@ -1,6 +1,6 @@
 include engine.inc
-include struct3d.inc
-include share.inc
+include struc3d.inc
+include aliasy.inc
 
 include world1.inc
 include world2.inc

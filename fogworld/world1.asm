@@ -1,11 +1,11 @@
 include world1.inc
 
 include math3d.inc
-include struct3d.inc
+include struc3d.inc
 include engine.inc
 include s3dgen.inc
 include letgen.inc
-include share.inc
+include aliasy.inc
 
 T_STD_NUM_OF_VERTS equ 512
 

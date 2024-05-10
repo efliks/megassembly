@@ -1,7 +1,7 @@
 include s3dgen.inc
-include struct3d.inc
+include struc3d.inc
 include engine.inc
-include share.inc
+include aliasy.inc
 
 .386p
 

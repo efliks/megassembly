@@ -1,9 +1,9 @@
-include share.inc
+include aliasy.inc
 include engine.inc
 include math3d.inc
-include struct3d.inc
-include flattri.inc
-include grdtri.inc
+include struc3d.inc
+include flat3.inc
+include grd3.inc
 
 .386p
 locals

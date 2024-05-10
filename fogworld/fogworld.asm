@@ -3,10 +3,10 @@
 include stub.inc
 include sys.inc
 include s3dgen.inc
-include share.inc
-include palette.inc
+include aliasy.inc
+include fogpal.inc
 include engine.inc
-include struct3d.inc
+include struc3d.inc
 
 include world1.inc
 include world2.inc

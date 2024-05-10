@@ -1,13 +1,13 @@
 TASM = c:\tasm\bin\tasm.exe
 TLINK = c:\tasm\bin\tlink.exe
 
-all: bump3d.exe
+all: bumptor.exe
 
-bump3d.exe: stub.obj sys.obj bump3d.obj bumptri.obj data.obj math3d.obj struct3d.obj
-	$(TLINK) /3 /x stub.obj sys.obj bump3d.obj bumptri.obj data.obj math3d.obj struct3d.obj,bump3d.exe
+bumptor.exe: stub.obj sys.obj bumptor.obj bump3.obj bumpdata.obj math3d.obj struc3d.obj
+	$(TLINK) /3 /x stub.obj sys.obj bumptor.obj bump3.obj bumpdata.obj math3d.obj struc3d.obj,bumptor.exe
 
 .asm.obj:
 	$(TASM) /m $<
 
 clean:
-	del *.obj *.map bump3d.exe
+	del *.obj *.map bumptor.exe

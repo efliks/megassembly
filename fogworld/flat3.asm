@@ -1,5 +1,5 @@
 include sys.inc
-include flattri.inc
+include flat3.inc
 
 SHIFT_CONST equ 12
 

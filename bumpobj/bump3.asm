@@ -1,4 +1,4 @@
-include bumptri.inc
+include bump3.inc
 include sys.inc
 
 SHIFT_CONST equ 12

@@ -1,9 +1,9 @@
 include allocfnt.inc
 include math3d.inc
 include letgen.inc
-include struct3d.inc
+include struc3d.inc
 include engine.inc
-include share.inc
+include aliasy.inc
 
 .386p
 

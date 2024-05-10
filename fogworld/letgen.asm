@@ -1,9 +1,9 @@
 ; (C) February 5, 2002  M. Feliks
 
-include share.inc
+include aliasy.inc
 include sys.inc
 include math3d.inc
-include struct3d.inc
+include struc3d.inc
 include letgen.inc
 
 POLYS_EQUAL equ 1

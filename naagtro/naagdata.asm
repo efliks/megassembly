@@ -1,4 +1,4 @@
-include data.inc
+include naagdata.inc
 
 .386p
 

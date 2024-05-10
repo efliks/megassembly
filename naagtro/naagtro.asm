@@ -2,7 +2,7 @@
 
 include stub.inc
 include sys.inc
-include data.inc
+include naagdata.inc
 include scroll.inc
 
 PART_TIMEOUT equ 800

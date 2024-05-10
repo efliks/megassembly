@@ -1,6 +1,6 @@
-include common.inc
+include aliasy.inc
 include math3d.inc
-include struct3d.inc
+include struc3d.inc
 
 .386p
 locals

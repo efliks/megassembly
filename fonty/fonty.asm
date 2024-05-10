@@ -2,9 +2,9 @@
 
 include sys.inc
 include stub.inc
-include share.inc
+include aliasy.inc
 include math3d.inc
-include struct3d.inc
+include struc3d.inc
 include grd3.inc
 include letgen.inc
 
