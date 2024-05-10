@@ -26,4 +26,7 @@ BUFFER3D_SIZE equ N_POINTS * (size point3d) + N_FACES * (size face)
 global MakeLetter3d:PROC
 global GetLetterParams:PROC
 
+global SetGenerateFogworld:PROC
+global UnsetGenerateFogworld:PROC
+
 global Buffer3d:tiny_struct3d

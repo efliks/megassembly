@@ -323,6 +323,12 @@ ML3d_not_empty: #
     jmp     ML3d_leave
 
 ML3d_normal:
+
+; FIXME Ugly hack to make fonty and fogworld work
+    mov     al, b [GenerateFogworld]
+    cmp     al, 1
+    je      ML3d_generate_fogworld
+    
     mov     edi, o Buffer3d
     call    CenterStruct3d
 
@@ -334,9 +340,48 @@ ML3d_normal:
 
     popad
     call    SaveLetter3d
+    jmp     ML3d_leave
+
+ML3d_generate_fogworld:
+
+    mov     ebx, d [_is3d]
+
+    mov     ecx, d [Buffer3d.ts3d_n_points]
+    mov     eax, ecx
+    shl     ecx, 1
+    add     ecx, eax
+    mov     esi, d [Buffer3d.ts3d_points]
+    mov     edi, d [ebx + S3D_PTR_B_VERTS]
+    cld
+    rep     movsd
+
+    mov     ecx, d [Buffer3d.ts3d_n_faces]
+    mov     eax, ecx
+    shl     ecx, 1
+    add     ecx, eax
+    mov     esi, d [Buffer3d.ts3d_faces]
+    mov     edi, d [ebx + S3D_PTR_FACES]
+    rep     movsw
+
+      ; scale letter
+    mov     esi, ebx
+    push    ebx
+    push    ebx
+    call    NormalizeStruct3d
+
+    pop     edi
+    call    CenterStruct3d
+
+    pop     edi
+    fild    d [_size]
+    fld     st(0)
+    fld     st(0)
+    fadd    st(0), st(0)  ; scale_z *= 2
+    call    ScaleStruct3d
+    popad
 
 ML3d_leave:
-      ; free allocated memory !
+      ; free allocated memory
     add     esp, BUFFER3D_SIZE
     ret
 endp
@@ -583,6 +628,22 @@ DisableBuffer3d proc
     ret
 endp
 
+SetGenerateFogworld proc
+    push    eax
+    mov     al, 1
+    mov     b [GenerateFogworld], al
+    pop     eax
+    ret
+endp
+
+UnsetGenerateFogworld proc
+    push    eax
+    xor     al, al
+    mov     b [GenerateFogworld], al
+    pop     eax
+    ret
+endp
+
 
 CubeVertices    dd -CSIZE, -CSIZE, CSIZE,  CSIZE, -CSIZE, CSIZE,  CSIZE, CSIZE, CSIZE
         dd -CSIZE, CSIZE, CSIZE,  -CSIZE, -CSIZE, -CSIZE,  CSIZE, -CSIZE, -CSIZE
@@ -599,6 +660,7 @@ ScaleY dd 0.3
 ScaleZ dd 0.6
 
 GetParamsMode db 0
+GenerateFogworld db 0
 
 Buffer3d_handle dd ?
 Buffer3d tiny_struct3d ?

@@ -31,6 +31,10 @@ endp
 ;************************************************************
 
 World3_Init proc
+
+; FIXME Ugly hack to make fonty and fogworld work
+    call    SetGenerateFogworld
+
     mov     esi, o World3_Strc
     call    S3d_AdjustMem
     push    eax
