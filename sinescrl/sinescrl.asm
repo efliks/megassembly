@@ -589,8 +589,8 @@ endp
 ; pi / 128.0
 pi_128 dd 0.02454
 
-txt_scroller db 'Sine Scroller & Zoomer coded by Majuma'
-    db ' on the 19th of January 2002 * * *', 0
+txt_scroller db 'Sine scroller & zoomer . . . Coded by Majuma/NAAG'
+    db ' on the 19th of January 2002 * * *     ', 0
 txt_logo db '@@@@', 0
 
 scr_letter dd 0

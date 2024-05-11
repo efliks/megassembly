@@ -739,18 +739,17 @@ LastSec db 0
 txt_framerate db 'FPS: ', 5 dup(0)
 
 t_OfsTable dd o t_Str1, o t_Str2, o t_Str3, o t_Str4, o t_Str5, o t_Str6
-    dd o t_Str7, o t_Str8
+    dd o t_Str7
 
 T_NSTRS equ (($ - t_OfsTable) / 4) + 1
 
-t_Str1 db 'FogTro!', 0
-t_Str2 db 'The Never Finished Foggy Intro', 0
-t_Str3 db 'Coded by Majuma/NAAG in pure Assembler', 0
-t_Str4 db 'Released on 16th of September 2003', 0
-t_Str5 db 'Greetz for all users of NAAG''s forum', 0
-t_Str6 db 'See http://www.naag.prv.pl/', 0
-t_Str7 db 'A bit old-school, don''t you think?   ;)', 0
-t_Str8 db 'Rendered frames: '
+t_Str1 db 'FogWorld', 0
+t_Str2 db 'A 3D demo coded in pure Assembler', 0
+t_Str3 db 'Brought to you by Majuma/NAAG', 0
+t_Str4 db 'Release date: September 16th, 2003', 0
+t_Str5 db 'Greetz for all users of NAAG forum...', 0
+t_Str6 db 'Visit our website: www.naag.prv.pl', 0
+t_Str7 db 'Rendered frames: '
 txt_frames db 8 dup(0)
 
 code32 ends

@@ -111,9 +111,9 @@ endp
 
 
 scroll_text db 'New Age Assembler Group proudly presents '
- db 'a short intro made by Majuma in pure 32-bit Assembler. *** '
+ db 'a short intro made by Majuma in pure 32-bit Assembler. * * * '
  db 'If you want to join our group or just have any reason for '
- db 'contacting us, visit our web page: www.naag.prv.pl *** '
+ db 'contacting us, visit our web page: www.naag.prv.pl * * * '
  db 'Greetings for all members of NAAG: HaRv3sTeR, Klemik, '
  db 'tOudi, SEM, pkmiecik, Overlord, Oolv, Miodzio, asmCode, '
  db '_TeStON_, Zedd and anybody I forgot . . .'

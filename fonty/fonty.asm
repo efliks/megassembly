@@ -587,7 +587,7 @@ CurrLetter dd o Structs3dTable
 CurrLetterCnt dd 0
 TimeToChange dd LETTER_TIME
 
-txt_app db '3dFontz 0.7 test by Majuma/NAAG', 0
+txt_app db '3D font generator by Majuma/NAAG', 0
 TXTAPP_LEN equ $ - txt_app - 1
 
 Move1 move3d_struct <0.0, 0.0, -180.0, 0.0, 0.0, 0.0>

@@ -537,17 +537,16 @@ txt_curr_len dd S1_LEN
 txt_curr_ofs dd str1 + 1
 txt_offsets dd str1, str2, str3, str4, str5, str6
 
-str1 db S1_LEN, '3D Bump Mapping beta 2.0'
+str1 db S1_LEN, 'Welcome to 3D bump mapping'
 S1_LEN equ $ - (str1 + 1)
 
-str2 db S2_LEN, 'Coded by Majuma in 32-bit ASM!'
+str2 db S2_LEN, 'Coded by Majuma/NAAG in pure Assembler'
 S2_LEN equ $ - (str2 + 1)
 
-str3 db S3_LEN, 'Contact author: mfelix@polbox.com'
+str3 db S3_LEN, 'Drop me a message: mfelix@polbox.com'
 S3_LEN equ $ - (str3 + 1)
 
-str4 db S4_LEN, 'Visit: www.naag.prv.pl', 10
-    db 7 dup(32), 'www.ps.nq.pl'
+str4 db S4_LEN, 'See our website: www.naag.prv.pl'
 S4_LEN equ $ - (str4 + 1)
 
 str5 db S5_LEN, 'Greetz: HaRv3sTeR, Klemik, tOudi,', 10
