@@ -16,14 +16,15 @@ DosBox or PCem.
 Secondly, you need 
 [Borland Turbo Assembler 5.0](https://winworldpc.com/product/turbo-assembler/5x).
 
-Once you have the assembler installed, open the attached makefile and replace
-the paths to TASM and TLINK with your own.
-
-Then, simply run make:
+Once you have the assembler installed, start from building the common 
+modules. Simply run make in the common folder:
 
 ```
-c:\mgssmbly > c:\tasm\bin\make.exe -f makefile
+c:\mgssmbly\common > c:\tasm\bin\make.exe -f makefile
 ```
+
+Then, repeat the above for each effect. Note that the paths to TASM and TLINK 
+in the makefile should match your Turbo Assembler installation folder.
 
 ## Execute
 
@@ -48,3 +49,4 @@ When watching an effect, press any key to exit to DOS.
 * Implement timing based on the PC timer, not on VGA vertical retrace
 * Combine the effects into one demo
 * Use an embedded DOS extender
+* Simplify build process
