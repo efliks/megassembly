@@ -3,11 +3,12 @@ TLINK = c:\tasm\bin\tlink.exe
 
 all: bumptor.exe
 
-bumptor.exe: stub.obj sys.obj bumptor.obj bump3.obj bumpdata.obj math3d.obj struc3d.obj
-	$(TLINK) /3 /x stub.obj sys.obj bumptor.obj bump3.obj bumpdata.obj math3d.obj struc3d.obj,bumptor.exe
+bumptor.exe: ..\common\stub.obj ..\common\sys.obj ..\common\math3d.obj ..\common\struc3d.obj bump3.obj bumpdata.obj bumptor.obj
+	$(TLINK) /3 /x /j..\common stub.obj sys.obj math3d.obj struc3d.obj bump3.obj bumpdata.obj bumptor.obj,bumptor.exe
 
 .asm.obj:
-	$(TASM) /m $<
+	$(TASM) /m /i..\common $<
 
 clean:
-	del *.obj *.map bumptor.exe
+	del *.obj
+	del *.exe

@@ -3,11 +3,12 @@ TLINK = c:\tasm\bin\tlink.exe
 
 all: sinescrl.exe
 
-sinescrl.exe: stub.obj sys.obj sinescrl.obj
-	$(TLINK) /3 /x stub.obj sys.obj sinescrl.obj,sinescrl.exe
+sinescrl.exe: ..\common\stub.obj ..\common\sys.obj sinescrl.obj
+	$(TLINK) /3 /x /j..\common stub.obj sys.obj sinescrl.obj,sinescrl.exe
 
 .asm.obj:
-	$(TASM) /m $<
+	$(TASM) /m /i..\common $<
 
 clean:
-	del *.obj *.map sinescrl.exe
+	del *.obj
+	del *.exe

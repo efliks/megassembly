@@ -3,11 +3,12 @@ TLINK = c:\tasm\bin\tlink.exe
 
 all: naagtro.exe
 
-naagtro.exe: stub.obj sys.obj naagdata.obj scroll.obj naagtro.obj
-	$(TLINK) /3 /x stub.obj sys.obj naagdata.obj scroll.obj naagtro.obj,naagtro.exe
+naagtro.exe: ..\common\stub.obj ..\common\sys.obj naagdata.obj naagtro.obj scroll.obj
+	$(TLINK) /3 /x /j..\common stub.obj sys.obj naagdata.obj naagtro.obj scroll.obj,naagtro.exe
 
 .asm.obj:
-	$(TASM) /m $<
+	$(TASM) /m /i..\common $<
 
 clean:
-	del *.obj *.map naagtro.exe
+	del *.obj
+	del *.exe
