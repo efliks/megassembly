@@ -49,4 +49,3 @@ When watching an effect, press any key to exit to DOS.
 * Implement timing based on the PC timer, not on VGA vertical retrace
 * Combine the effects into one demo
 * Use an embedded DOS extender
-* Simplify build process
