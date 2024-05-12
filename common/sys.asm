@@ -123,6 +123,13 @@ init_font proc
     sub     esp, size dpmi_regs
 
     mov     edi, esp
+    push    edi
+    mov     ecx, size dpmi_regs
+    xor     eax, eax
+    cld
+    rep     stosb
+    pop     edi
+
     mov     dword ptr [edi._eax], 00001130h
     mov     dword ptr [edi._ebx], 00000300h
     mov     eax, 0300h

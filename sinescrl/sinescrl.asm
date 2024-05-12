@@ -12,7 +12,6 @@ SINEWAVE_AMP equ 7
 
 LETTER_COLOR equ 0c8c8c8c8h
 LETTER_SIZE equ 32
-FTAB_SIZE equ 256 * (LETTER_SIZE * LETTER_SIZE)
 
 .386p
 locals
@@ -35,7 +34,6 @@ entrypoint:
     mov     d [Palette], ebx
     add     ebx, 768
     mov     d [FontTable], ebx
-    ;add     ebx, FTAB_SIZE
     add     ebx, 256 * (LETTER_SIZE * LETTER_SIZE)
     mov     d [scr_buffer], ebx
     add     ebx, 32*320
@@ -232,6 +230,13 @@ quit_me:
 
 init_my_font proc
     mov     edi, o _regs
+    push    edi
+    mov     ecx, size dpmi_regs
+    xor     eax, eax
+    cld
+    rep     stosb
+
+    pop     edi
     mov     d [edi._eax], 00001130h
     mov     d [edi._ebx], 00000300h
     mov     eax, 0300h
@@ -247,7 +252,6 @@ init_my_font proc
     push    esi
 
     mov     edi, d [FontTable]
-    ;mov     ecx, FTAB_SIZE / 4
     mov     ecx, 256 * (LETTER_SIZE * LETTER_SIZE) / 4
     xor     eax, eax
     cld
