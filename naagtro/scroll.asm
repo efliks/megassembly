@@ -15,21 +15,7 @@ init_scroll proc
     cld
     rep     stosd
 
-      ; get font address
-    mov     edi, offset _regs
-    mov     dword ptr [edi._eax], 00001130h
-    mov     dword ptr [edi._ebx], 00000300h
-    mov     eax, 0300h
-    mov     ebx, 10h
-    int     31h
-    
-    movzx   eax, word ptr [edi._es]
-    shl     eax, 4
-    movzx   ebx, word ptr [edi._ebp]
-    add     eax, ebx
-    sub     eax, dword ptr [code32_base]
-    mov     dword ptr [ptr_font], eax
-
+    call    init_font
     ret
 endp
 
@@ -50,7 +36,7 @@ do_scroll proc
 @@string_ok:
 
     shl     eax, 3
-    add     eax, ptr_font
+    add     eax, dword ptr [font_addr]
     mov     esi, eax
 
     mov     edi, offset scroll_buffer
@@ -121,11 +107,8 @@ scroll_text db 'New Age Assembler Group proudly presents '
 db 30 dup(32), 0
 
 scroll_buffer db 320*8 dup(?)
-curr_letter dd ?
-curr_line dd ?
-
-ptr_font dd ?
-_regs dpmi_regs ?
+curr_letter dd 0
+curr_line dd 0
 
 code32 ends
 

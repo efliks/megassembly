@@ -46,17 +46,7 @@ entrypoint proc
     
     call    init_scroll
 
-      ; get video memory address
-    mov     eax, 0a0000h
-    sub     eax, code32_base
-    mov     _a0000h, eax
-
-      ; set mode 13h
-    mov     ax, 0300h
-    mov     bx, 10h
-    mov     edi, offset _regs
-    mov     [edi._eax], 13h
-    int     31h
+    call    set_mode13h
 
     mov     esi, offset palette
     call    set_palette
@@ -105,14 +95,8 @@ entrypoint proc
 
 ;------------------------------------------------------------
 
-      ; back to text mode
-    mov     ax, 0300h
-    mov     bx, 10h
-    mov     edi, offset _regs
-    mov     [edi._eax], 03h
-    int     31h
+    call    unset_mode13h
 
-      ; free memory
     mov     eax, mem_handle
     call    free_mem
 
