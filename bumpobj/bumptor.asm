@@ -76,21 +76,11 @@ entrypoint proc
 
       ; init normals
     mov     esi, o torus3d
-    mov     d torus3d.s3d_point_nrm, o point_normals
-    ;call    init_point_normals
+    call    init_point_normals
     
 
     call    init_font
-
-    mov     eax, 0a0000h
-    sub     eax, code32_base
-    mov     _a0000h, eax
-
-    mov     edi, o _regs
-    mov     [edi._eax], 000013h
-    mov     eax, 0300h
-    mov     ebx, 10h
-    int     31h
+    call    set_mode13h
 
     mov     esi, o palette
     call    set_palette
@@ -214,11 +204,7 @@ comment #
     dec     al
     jnz     @@main_loop
 
-    mov     edi, o _regs
-    mov     [edi._eax], 000003h
-    mov     eax, 0300h
-    mov     ebx, 10h
-    int     31h
+    call    unset_mode13h
 
     mov     eax, mem_handle
     call    free_mem

@@ -6,6 +6,5 @@ MAX_F equ 400
 global points:DWORD
 global faces:WORD
 global tex_coords:BYTE
-global point_normals:DWORD
 
 global palette:BYTE
