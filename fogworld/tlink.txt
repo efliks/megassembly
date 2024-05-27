@@ -1,1 +1,1 @@
-/3 /x /j..\common stub.obj sys.obj allocfnt.obj engine.obj flat3.obj fogworld.obj grd3.obj letgen.obj math3d.obj fogpal.obj s3dgen.obj struc3d.obj world1.obj world2.obj world3.obj,fogworld.exe
+/3 /x /j..\common stub.obj sys.obj engine.obj flat3.obj fogworld.obj grd3.obj letgen.obj math3d.obj fogpal.obj s3dgen.obj struc3d.obj world1.obj world2.obj world3.obj,fogworld.exe
