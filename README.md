@@ -29,7 +29,7 @@ in the makefile should match your Turbo Assembler installation folder.
 ## Execute
 
 There are six executable files. Since they make use of protected mode, you
-need a DOS extender. 
+need a DPMI host. 
 
 You can download CWSDPMI at 
 [this location](https://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/util/system/cwsdpmi/csdpmi7b.zip).
@@ -42,7 +42,7 @@ a simple batch file.
 If you are using Win9x, do not bother with CWSDPMI, because Windows has
 its own DPMI facility. You can start the effects directly.
 
-When watching an effect, press any key to exit to DOS.
+When watching an effect, press [escape] to exit to DOS.
 
 ## Future plans
 
