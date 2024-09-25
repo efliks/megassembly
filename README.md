@@ -1,11 +1,15 @@
-<img src="./sample.png" alt="Sample image" width="750" />
-
 # megassembly/32
 
 Graphical effects for MS-DOS implemented in 32-bit x86 Assembly. 
 
 For some historical background, have a look at my
 [other repository](https://github.com/efliks/demoscene-legacy).
+
+I created a video featuring the effects. There is no sound! Make sure 
+to watch at 720p, and use playback speed of 2x if needed, as some parts 
+may be quite boring:
+
+https://youtu.be/cQQqwRQsM3M
 
 ## Build
 
@@ -44,7 +48,7 @@ its own DPMI facility. You can start the effects directly.
 
 When watching an effect, press [escape] to exit to DOS.
 
-## Future plans
+## To do?
 
 * Implement timing based on the PC timer, not on VGA vertical retrace
 * Combine the effects into one demo
