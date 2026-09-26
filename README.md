@@ -5,9 +5,8 @@ Graphical effects for MS-DOS implemented in 32-bit x86 Assembly.
 For some historical background, have a look at my
 [other repository](https://github.com/efliks/demoscene-legacy).
 
-I created a video featuring the effects. There is no sound! Make sure 
-to watch at 720p, and use playback speed of 2x if needed, as some parts 
-may be quite boring:
+I created a video featuring the effects (hints: watch at 720p, and 
+use playback speed of 2x as some parts may be quite boring):
 
 https://youtu.be/cQQqwRQsM3M
 
