@@ -1,4 +1,4 @@
-; (C) November 13, 2001  M. Feliks
+; (C) November 13, 2002  M. Feliks
 
 include stub.inc
 include sys.inc
